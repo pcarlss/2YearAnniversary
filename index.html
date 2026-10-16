@@ -1,12 +1,16 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#fff0f5">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#fff5f7">
+  <meta name="description" content="A little scrapbook celebrating two years of love, memories, and adventures together.">
+  <meta name="color-scheme" content="light">
   <title>Two Years With You, Baby ♡</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <style>
@@ -17,78 +21,141 @@
       --rose: #d76b8b;
       --dark: #573b47;
       --muted: #987b87;
+      --border: #f4d8e1;
+      --shadow: 0 12px 35px #9e647510;
+      --radius: 24px;
     }
 
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+    }
 
-    html { scroll-behavior: smooth; }
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 20px;
+    }
 
     body {
       margin: 0;
       color: var(--dark);
       background: var(--light);
       font-family: "DM Sans", sans-serif;
-      overflow-x: hidden;
+      overflow-x: clip;
     }
 
-    button, textarea { font: inherit; }
-    button { cursor: pointer; }
+    body.modal-open {
+      overflow: hidden;
+    }
+
+    button,
+    textarea,
+    audio {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    button:focus-visible,
+    textarea:focus-visible,
+    audio:focus-visible,
+    a:focus-visible {
+      outline: 3px solid var(--rose);
+      outline-offset: 4px;
+    }
+
+    button:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+    img {
+      max-width: 100%;
+    }
+
+    h1,
+    h2,
+    h3,
+    .handwritten {
+      font-family: "Caveat", cursive;
+      font-weight: 600;
+    }
 
     .hero {
-      min-height: 90vh;
-      padding: 70px 20px;
+      min-height: 100svh;
+      min-height: 100vh;
+      padding: 70px 24px;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       text-align: center;
       position: relative;
+      isolation: isolate;
+      overflow: hidden;
       background:
-        radial-gradient(ellipse at 10% 20%, #ffe0e9 0, transparent 35%),
-        radial-gradient(ellipse at 90% 70%, #f8d3df 0, transparent 35%),
+        radial-gradient(ellipse at 15% 20%, #ffe0e9 0, transparent 40%),
+        radial-gradient(ellipse at 85% 80%, #f8d3df 0, transparent 40%),
         var(--light);
     }
 
     .eyebrow {
+      position: relative;
+      z-index: 2;
       letter-spacing: 3px;
       text-transform: uppercase;
       font-size: 11px;
+      line-height: 1.7;
       color: var(--rose);
     }
 
-    h1, h2, h3, .handwritten {
-      font-family: "Caveat", cursive;
-      font-weight: 600;
-    }
-
-    h1 {
-      font-size: clamp(54px, 10vw, 100px);
-      line-height: .98;
+    .hero h1 {
+      position: relative;
+      z-index: 2;
+      max-width: 100%;
+      font-size: clamp(48px, 9vw, 90px);
+      line-height: 0.98;
       margin: 24px 0;
-      animation: floatTitle 4s ease-in-out infinite;
+      animation: gentleWander 9s ease-in-out infinite alternate;
+      overflow-wrap: break-word;
     }
 
-    @keyframes floatTitle {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-8px); }
+    .hero h1 span {
+      color: var(--rose);
     }
 
-    h1 span { color: var(--rose); }
+    @keyframes gentleWander {
+      0%   { transform: translate(0, 0) rotate(0deg); }
+      25%  { transform: translate(-9px, -5px) rotate(-1deg); }
+      50%  { transform: translate(8px, 6px) rotate(1deg); }
+      75%  { transform: translate(-5px, 4px) rotate(-0.5deg); }
+      100% { transform: translate(7px, -5px) rotate(1deg); }
+    }
 
     .hero p {
+      position: relative;
+      z-index: 2;
       max-width: 450px;
+      min-height: 3.6em;
       line-height: 1.8;
       color: var(--muted);
-      min-height: 3.6em; /* Prevents jumping when dynamic text changes */
+      transition: opacity 0.4s ease;
     }
 
     .heart {
+      position: relative;
+      z-index: 2;
       color: var(--rose);
       font-size: 28px;
-      animation: pulse 1.8s infinite;
+      animation: pulse 1.8s ease-in-out infinite;
     }
 
     .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
       border: 0;
       border-radius: 30px;
       padding: 13px 24px;
@@ -96,20 +163,25 @@
       color: white;
       margin-top: 18px;
       box-shadow: 0 8px 20px #d76b8b30;
-      transition: transform .2s;
+      transition: transform 0.2s, box-shadow 0.2s;
+      text-decoration: none;
     }
 
-    .button:hover { transform: translateY(-2px); }
+    .button:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 25px #d76b8b40;
+    }
 
     section {
-      padding: 80px 20px;
-      max-width: 1000px;
-      margin: auto;
+      padding: 85px 24px;
+      max-width: 1050px;
+      margin: 0 auto;
     }
 
     .section-title {
       text-align: center;
-      font-size: clamp(40px, 7vw, 60px);
+      font-size: clamp(40px, 7vw, 62px);
+      line-height: 1.05;
       margin: 0 0 12px;
     }
 
@@ -118,16 +190,21 @@
       color: var(--muted);
       line-height: 1.8;
       margin: 0 auto 40px;
-      max-width: 550px;
+      max-width: 580px;
+    }
+
+    .counter-card,
+    .song-card,
+    .travel-card {
+      background: var(--paper);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
     }
 
     .counter-card {
-      background: var(--paper);
-      border: 1px solid #f4d8e1;
-      border-radius: 25px;
-      padding: 35px 20px;
+      padding: 40px 20px;
       text-align: center;
-      box-shadow: 0 12px 35px #9e647510;
     }
 
     .counter {
@@ -149,6 +226,7 @@
       display: block;
       font-size: 30px;
       color: var(--rose);
+      font-variant-numeric: tabular-nums;
     }
 
     .counter-unit span {
@@ -159,7 +237,7 @@
     }
 
     .timeline {
-      max-width: 650px;
+      max-width: 700px;
       margin: 45px auto 0;
       position: relative;
     }
@@ -176,7 +254,11 @@
 
     .moment {
       position: relative;
-      padding: 0 0 35px 55px;
+      padding: 0 0 40px 55px;
+    }
+
+    .moment:last-child {
+      padding-bottom: 0;
     }
 
     .moment::before {
@@ -187,6 +269,7 @@
       background: var(--light);
       color: var(--rose);
       font-size: 25px;
+      line-height: 1;
     }
 
     .moment time {
@@ -197,7 +280,8 @@
     }
 
     .moment h3 {
-      font-size: 32px;
+      font-size: 34px;
+      line-height: 1.1;
       margin: 5px 0;
     }
 
@@ -207,51 +291,194 @@
       margin: 0;
     }
 
-    /* Smart Gallery for 47 Mixed (Vertical & Horizontal) Photos */
+    /* Photo gallery */
+
+    .gallery-section {
+      overflow-anchor: none;
+    }
+
+    .gallery-controls {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin: 25px 0;
+    }
+
+    .gallery-controls button,
+    .lightbox-control,
+    .lightbox-close {
+      border: 0;
+      border-radius: 30px;
+      padding: 12px 20px;
+      background: var(--rose);
+      color: white;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+
+    .gallery-controls button:hover:not(:disabled),
+    .lightbox-control:hover,
+    .lightbox-close:hover {
+      transform: translateY(-2px);
+    }
+
+    .gallery-page {
+      min-width: 70px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 14px;
+      font-variant-numeric: tabular-nums;
+    }
+
     .gallery {
-      columns: 3 220px;
-      column-gap: 22px;
-      margin-top: 35px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      align-items: start;
+      gap: 20px;
+      margin-top: 20px;
+      min-height: 620px;
+      overflow-anchor: none;
     }
 
     .polaroid {
+      min-width: 0;
+      margin: 0;
+      padding: 10px 10px 16px;
       background: white;
-      padding: 10px 10px 18px;
-      box-shadow: 0 8px 22px #7b485015;
-      margin-bottom: 22px;
-      break-inside: avoid;
+      box-shadow: 0 4px 12px #7b485015;
       transform: rotate(-1deg);
-      transition: transform .25s, z-index .25s;
-      display: inline-block;
-      width: 100%;
+      transition: transform 0.2s, box-shadow 0.2s;
     }
 
-    .polaroid:nth-child(even) { transform: rotate(1.5deg); }
-    .polaroid:hover { transform: rotate(0) translateY(-5px); z-index: 10; }
+    .polaroid:nth-child(even) {
+      transform: rotate(1deg);
+    }
+
+    .polaroid:hover {
+      position: relative;
+      z-index: 2;
+      transform: rotate(0) translateY(-3px);
+      box-shadow: 0 12px 25px #7b485020;
+    }
+
+    .polaroid[hidden] {
+      display: none !important;
+    }
 
     .polaroid img {
       display: block;
       width: 100%;
-      height: auto; /* Keeps natural proportions for vertical and horizontal */
+      height: 240px;
       object-fit: contain;
-      background: #f9dce5;
-      cursor: pointer;
+      background: #fff5f7;
+      cursor: zoom-in;
+    }
+
+    .polaroid img:focus-visible {
+      outline-offset: -3px;
     }
 
     .polaroid p {
       text-align: center;
       font-family: "Caveat", cursive;
-      font-size: 21px;
+      font-size: 20px;
+      line-height: 1.2;
+      overflow-wrap: anywhere;
       margin: 10px 0 0;
     }
 
+    .gallery-status {
+      text-align: center;
+      color: var(--muted);
+      font-size: 13px;
+      min-height: 1.5em;
+      margin: 12px 0 0;
+    }
+
+    /* Image lightbox */
+
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      background: rgb(45 25 35 / 92%);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      padding: 75px 20px 90px;
+      backdrop-filter: blur(6px);
+    }
+
+    .lightbox.active {
+      display: flex;
+    }
+
+    .lightbox-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      width: 100%;
+      height: 100%;
+      min-height: 0;
+    }
+
+    .lightbox img {
+      display: block;
+      max-width: 90vw;
+      max-height: 72vh;
+      object-fit: contain;
+      border: 4px solid white;
+      border-radius: 8px;
+      box-shadow: 0 20px 40px #0005;
+    }
+
+    .lightbox-caption {
+      color: white;
+      text-align: center;
+      line-height: 1.5;
+      max-width: 90%;
+      min-height: 1.5em;
+    }
+
+    .lightbox-close {
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      width: 46px;
+      height: 46px;
+      padding: 0;
+      font-size: 28px;
+      background: white;
+      color: var(--dark);
+    }
+
+    .lightbox-nav {
+      position: absolute;
+      bottom: 20px;
+      left: 0;
+      right: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 18px;
+    }
+
+    .lightbox-count {
+      color: white;
+      min-width: 65px;
+      text-align: center;
+      font-size: 14px;
+    }
+
+    /* Song */
+
     .song-card {
-      max-width: 580px;
+      max-width: 600px;
       margin: auto;
-      padding: 30px;
-      background: var(--paper);
-      border: 1px solid #f4d8e1;
-      border-radius: 25px;
+      padding: 35px;
       text-align: center;
     }
 
@@ -266,22 +493,116 @@
       font-size: 50px;
     }
 
-    .song-card h3 { font-size: 42px; margin: 8px 0; }
-    .song-card p { color: var(--muted); }
-    audio { width: 100%; margin-top: 15px; }
+    .song-card h3 {
+      font-size: 42px;
+      line-height: 1.1;
+      margin: 8px 0;
+    }
+
+    .song-card p {
+      color: var(--muted);
+    }
+
+    audio {
+      display: block;
+      width: 100%;
+      margin-top: 15px;
+    }
+
+    .audio-note {
+      font-size: 13px;
+      line-height: 1.6;
+      margin-top: 12px;
+    }
+
+    /* Soundboard */
+
+    .soundboard-card {
+      max-width: 850px;
+      margin: 28px auto 0;
+      padding: 30px;
+      background: var(--paper);
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      box-shadow: 0 12px 30px #a85b760d;
+      text-align: center;
+    }
+
+    .soundboard-intro {
+      max-width: 560px;
+      margin: 0 auto 22px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .soundboard-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .sound-button {
+      min-height: 100px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      padding: 14px 8px;
+      border: 1px solid #f0cbd7;
+      border-radius: 16px;
+      background: linear-gradient(145deg, #fff, #fff0f5);
+      color: var(--dark);
+      font: inherit;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+    }
+
+    .sound-button:hover {
+      transform: translateY(-3px);
+      border-color: var(--rose);
+      box-shadow: 0 8px 18px #a85b7618;
+    }
+
+    .sound-button:active { transform: scale(0.97); }
+
+    .sound-button:focus-visible {
+      outline: 3px solid var(--rose);
+      outline-offset: 3px;
+    }
+
+    .sound-icon { font-size: 27px; line-height: 1; }
+    .sound-label { font-size: 13px; }
+
+    .soundboard-status {
+      min-height: 1.5em;
+      margin: 18px 0 0;
+      color: var(--rose);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 650px) {
+      .soundboard-card { padding: 20px 14px; }
+      .soundboard-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .sound-button { min-height: 88px; }
+    }
+
+    /* Reasons */
 
     .reasons {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 15px;
-      max-width: 720px;
+      gap: 18px;
+      max-width: 760px;
       margin: auto;
     }
 
     .reason {
       background: var(--paper);
       border-radius: 18px;
-      padding: 22px;
+      padding: 24px;
       border: 1px solid #f5dce4;
       line-height: 1.7;
     }
@@ -293,32 +614,54 @@
       margin-bottom: 8px;
     }
 
-    .letter-section { text-align: center; }
+    /* Travel */
+
+    .travel-card {
+      text-align: center;
+      padding: 35px;
+    }
+
+    .travel-card .japan {
+      font-size: 60px;
+      margin: 0 0 12px;
+    }
+
+    .travel-card .section-subtitle {
+      margin-bottom: 10px;
+    }
+
+    /* Love letter */
+
+    .letter-section {
+      text-align: center;
+    }
 
     .envelope {
+      display: block;
       width: 220px;
       height: 145px;
       position: relative;
       margin: 40px auto 20px;
       border: 0;
-      background: #efb1c5;
       border-radius: 5px;
+      background: #efb1c5;
       box-shadow: 0 12px 25px #a85b7620;
-      overflow: visible;
+      isolation: isolate;
+      perspective: 600px;
     }
 
     .envelope::before {
       content: "";
       position: absolute;
-      top: 0;
-      left: 0;
+      inset: 0 0 auto;
       width: 0;
       height: 0;
+      margin: 0 auto;
       border-left: 110px solid transparent;
       border-right: 110px solid transparent;
       border-top: 85px solid #f7c8d7;
-      transform-origin: top;
-      transition: transform .5s;
+      transform-origin: top center;
+      transition: transform 0.5s;
       z-index: 3;
     }
 
@@ -326,20 +669,32 @@
       content: "♡";
       position: absolute;
       top: 60px;
-      left: 92px;
+      left: 0;
+      right: 0;
+      text-align: center;
       font-size: 35px;
       color: white;
       z-index: 4;
+      pointer-events: none;
     }
 
-    .envelope.open::before { transform: rotateX(180deg); }
+    .envelope.open::before {
+      transform: rotateX(180deg);
+    }
+
+    .envelope-label {
+      display: block;
+      text-align: center;
+      font-family: "Caveat", cursive;
+      font-size: 25px;
+    }
 
     .letter-paper {
       display: none;
-      max-width: 650px;
+      max-width: 680px;
       margin: 30px auto;
-      padding: 25px;
-      background: #fffdf9;
+      padding: 28px;
+      background: var(--paper);
       border: 1px solid #efd9d0;
       border-radius: 8px;
       box-shadow: 0 10px 35px #69415012;
@@ -348,14 +703,19 @@
 
     .letter-paper.visible {
       display: block;
-      animation: appear .6s ease both;
+      animation: appear 0.4s ease both;
     }
 
-    .letter-paper h3 { font-size: 36px; text-align: center; }
+    .letter-paper h3 {
+      font-size: 36px;
+      text-align: center;
+      margin-top: 0;
+    }
 
     .letter-paper textarea {
+      display: block;
       width: 100%;
-      min-height: 260px;
+      min-height: 280px;
       padding: 15px;
       border: 1px dashed #e7b7c7;
       border-radius: 10px;
@@ -365,29 +725,42 @@
       color: var(--dark);
     }
 
-    .letter-note { font-size: 12px; color: var(--muted); line-height: 1.6; }
-
-    .travel-card {
-      text-align: center;
-      border-radius: 25px;
-      overflow: hidden;
-      background: var(--paper);
-      border: 1px solid #f4d8e1;
-      padding: 30px;
+    .letter-note {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.6;
     }
 
-    .travel-card .japan { font-size: 60px; margin: 0; }
+    /* Footer */
 
     .final {
+      max-width: none;
       text-align: center;
-      padding: 100px 20px;
+      padding: 100px 24px;
       background: linear-gradient(160deg, #f8d6e1, #fff5f7);
     }
 
-    .final h2 { font-size: clamp(55px, 10vw, 90px); margin: 15px 0; }
-    .final p { max-width: 470px; margin: 15px auto; line-height: 1.8; color: var(--muted); }
+    .final h2 {
+      font-size: clamp(50px, 9vw, 90px);
+      line-height: 1;
+      margin: 15px 0;
+    }
 
-    footer { padding: 25px; text-align: center; color: var(--muted); font-size: 12px; }
+    .final p {
+      max-width: 490px;
+      margin: 15px auto;
+      line-height: 1.8;
+      color: var(--muted);
+    }
+
+    footer {
+      padding: 20px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    /* Floating hearts */
 
     .floating-heart {
       position: fixed;
@@ -396,34 +769,437 @@
       pointer-events: none;
       z-index: 10;
       animation: floatUp 5s linear forwards;
+      will-change: transform, opacity;
     }
 
-    @keyframes pulse { 50% { transform: scale(1.15); } }
-    @keyframes floatUp { to { transform: translateY(-110vh) rotate(25deg); opacity: 0; } }
-    @keyframes appear { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes pulse {
+      50% { transform: scale(1.12); }
+    }
+
+    @keyframes floatUp {
+      to {
+        transform: translateY(-110vh) rotate(25deg);
+        opacity: 0;
+      }
+    }
+
+    @keyframes appear {
+      from {
+        opacity: 0;
+        transform: translateY(12px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
 
     @media (max-width: 650px) {
-      section { padding: 60px 18px; }
-      .gallery { columns: 2 150px; column-gap: 14px; }
-      .reasons { grid-template-columns: 1fr; }
-      .counter-unit { min-width: 65px; }
-      .counter-unit strong { font-size: 25px; }
-      .song-card { padding: 22px; }
+      section {
+        padding: 65px 18px;
+      }
+
+      .hero {
+        padding: 55px 20px;
+      }
+
+      .hero h1 {
+        font-size: clamp(46px, 12vw, 70px);
+      }
+
+      .gallery {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+        min-height: 740px;
+      }
+
+      .polaroid {
+        padding: 7px 7px 12px;
+      }
+
+      .polaroid img {
+        height: 180px;
+      }
+
+      .polaroid p {
+        font-size: 19px;
+      }
+
+      .gallery-controls {
+        gap: 8px;
+      }
+
+      .gallery-controls button {
+        padding: 11px 13px;
+        font-size: 13px;
+      }
+
+      .gallery-page {
+        min-width: 48px;
+        font-size: 12px;
+      }
+
+      .reasons {
+        grid-template-columns: 1fr;
+      }
+
+      .counter-unit {
+        min-width: 65px;
+      }
+
+      .counter-unit strong {
+        font-size: 25px;
+      }
+
+      .song-card,
+      .travel-card {
+        padding: 24px 18px;
+      }
+
+      .lightbox {
+        padding: 65px 12px 90px;
+      }
+
+      .lightbox img {
+        max-width: 96vw;
+        max-height: 68vh;
+      }
+
+      .lightbox-nav {
+        gap: 10px;
+      }
+
+      .lightbox-control {
+        padding: 12px 15px;
+      }
+
+      .letter-paper {
+        padding: 20px;
+      }
     }
+
+    @media (max-width: 360px) {
+      .gallery {
+        gap: 9px;
+      }
+
+      .polaroid img {
+        height: 150px;
+      }
+
+      .gallery-controls button {
+        padding: 10px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+
+      .floating-heart {
+        display: none !important;
+      }
+    }
+
+    /* Scrolling love banner */
+    .love-banner {
+      --banner-bg: #f6c5d5;
+      --banner-text: #8e405c;
+
+      width: 100%;
+      overflow: hidden;
+      background: var(--banner-bg);
+      color: var(--banner-text);
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(142, 64, 92, 0.12);
+      position: relative;
+      z-index: 10;
+    }
+
+    .love-banner-track {
+      display: flex;
+      width: max-content;
+      animation: love-scroll 32s linear infinite;
+      will-change: transform;
+    }
+
+    .love-banner-group {
+      display: flex;
+      flex-shrink: 0;
+      align-items: center;
+      gap: 38px;
+      padding-right: 38px;
+      white-space: nowrap;
+    }
+
+    .love-banner-group span {
+      font-family: "Caveat", cursive;
+      font-size: 23px;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+
+    @keyframes love-scroll {
+      from {
+        transform: translateX(0);
+      }
+
+      to {
+        transform: translateX(-50%);
+      }
+    }
+
+    /* Pause when hovered */
+    .love-banner:hover .love-banner-track {
+      animation-play-state: paused;
+    }
+
+    /* Smaller screens */
+    @media (max-width: 600px) {
+      .love-banner {
+        padding: 9px 0;
+      }
+
+      .love-banner-group {
+        gap: 25px;
+        padding-right: 25px;
+      }
+
+      .love-banner-group span {
+        font-size: 20px;
+      }
+    }
+
+    /* Accessibility */
+    @media (prefers-reduced-motion: reduce) {
+      .love-banner-track {
+        animation: none;
+      }
+
+      .love-banner {
+        overflow-x: auto;
+      }
+    }
+    /* Japan photo gallery */
+    .japan-gallery {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+      margin-top: 28px;
+    }
+
+    .japan-photo {
+      margin: 0;
+      overflow: hidden;
+      border-radius: 16px;
+      background: #f8e5ec;
+      border: 5px solid #fff;
+      box-shadow: 0 4px 14px rgba(100, 50, 70, 0.12);
+      transform: rotate(-1deg);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .japan-photo:nth-child(2) {
+      transform: rotate(1.5deg);
+    }
+
+    .japan-photo:nth-child(3) {
+      transform: rotate(-0.5deg);
+    }
+
+    .japan-photo:hover {
+      transform: rotate(0deg) translateY(-5px);
+      box-shadow: 0 9px 22px rgba(100, 50, 70, 0.18);
+    }
+
+    .japan-photo img {
+      display: block;
+      width: 100%;
+      height: 260px;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    @media (max-width: 650px) {
+      .japan-gallery {
+        grid-template-columns: 1fr;
+        gap: 22px;
+      }
+
+      .japan-photo img {
+        height: auto;
+        max-height: 400px;
+        aspect-ratio: 4 / 3;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .japan-photo {
+        transition: none;
+      }
+    }
+
+    /* Dream trip: Montreal to Japan */
+    .flight-map-card {
+      max-width: 900px;
+      margin: 35px auto 0;
+      padding: clamp(16px, 3vw, 30px);
+      overflow: hidden;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background:
+        radial-gradient(ellipse at 12% 10%, #ffe8ef 0, transparent 45%),
+        radial-gradient(ellipse at 90% 90%, #f8e1e9 0, transparent 42%),
+        var(--paper);
+      box-shadow: var(--shadow);
+    }
+    .flight-map-heading {
+      margin: 0 0 6px;
+      text-align: center;
+      color: var(--rose);
+      font-family: "Caveat", cursive;
+      font-size: clamp(29px, 5vw, 40px);
+    }
+    .flight-map-caption {
+      margin: 0 0 10px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+    .flight-map {
+      display: block;
+      width: 100%;
+      height: auto;
+      overflow: visible;
+    }
+    .map-land {
+      fill: #f4dce4;
+      stroke: #edc7d4;
+      stroke-width: 1.5;
+      stroke-linejoin: round;
+    }
+    .flight-route {
+      fill: none;
+      stroke: var(--rose);
+      stroke-width: 3;
+      stroke-linecap: round;
+      stroke-dasharray: 2 10;
+    }
+    .flight-map-label {
+      fill: var(--dark);
+      font-family: "DM Sans", sans-serif;
+      font-size: 17px;
+      font-weight: 700;
+    }
+    .flight-map-small {
+      fill: var(--muted);
+      font-family: "Caveat", cursive;
+      font-size: 21px;
+    }
+    .flight-map-pin {
+      fill: var(--rose);
+      stroke: white;
+      stroke-width: 4;
+    }
+    .flight-plane {
+      font-size: 34px;
+      filter: drop-shadow(0 2px 2px #8e405c30);
+    }
+    .flight-map-note {
+      margin: 2px 0 0;
+      text-align: center;
+      color: var(--rose);
+      font-family: "Caveat", cursive;
+      font-size: 25px;
+    }
+    @media (max-width: 600px) {
+      .flight-map-card { padding: 14px 10px; }
+      .flight-map-label { font-size: 20px; }
+      .flight-map-small { font-size: 24px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .flight-plane { display: none; }
+    }
+
   </style>
 </head>
 
 <body>
+
+    <!-- Scrolling love banner -->
+  <div class="love-banner" aria-label="Love messages">
+    <div class="love-banner-track">
+      <div class="love-banner-group">
+        <span>♡ I LOVE YOU ♡</span>
+        <span>MY FAVOURITE PERSON</span>
+        <span>♡</span>
+        <span>TWO YEARS WITH YOU</span>
+        <span>YOU'RE MY HAPPY PLACE ♡</span>
+        <span>MY LOVE, MY BABY</span>
+      </div>
+
+      <!-- Duplicate for a seamless loop -->
+      <div class="love-banner-group" aria-hidden="true">
+        <span>♡ I LOVE YOU ♡</span>
+        <span>MY FAVOURITE PERSON</span>
+        <span>FOREVER & ALWAYS ♡</span>
+        <span>TWO YEARS WITH YOU</span>
+        <span>YOU'RE MY HAPPY PLACE ♡</span>
+        <span>MY LOVE, MY BABY</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Accessible image viewer -->
+  <div
+    class="lightbox"
+    id="lightbox"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Photo viewer"
+    aria-hidden="true"
+    tabindex="-1"
+  >
+    <button class="lightbox-close" id="lightbox-close" type="button" aria-label="Close photo viewer">
+      &times;
+    </button>
+
+    <div class="lightbox-content">
+      <img id="lightbox-img" src="" alt="">
+      <div class="lightbox-caption" id="lightbox-caption" aria-live="polite"></div>
+    </div>
+
+    <div class="lightbox-nav">
+      <button class="lightbox-control" id="lightbox-prev" type="button" aria-label="Previous photo">
+        &larr; Previous
+      </button>
+      <span class="lightbox-count" id="lightbox-count">1 / 46</span>
+      <button class="lightbox-control" id="lightbox-next" type="button" aria-label="Next photo">
+        Next &rarr;
+      </button>
+    </div>
+  </div>
+
   <header class="hero">
     <div class="eyebrow">October 18, 2024 — Forever after</div>
-    <div class="heart">♡</div>
+    <div class="heart" aria-hidden="true">♡</div>
+
     <h1>Two years<br>with you,<br><span>baby.</span></h1>
+
     <p id="dynamic-subtitle">
       A little scrapbook of us, the memories we've made,
       and all the beautiful moments still waiting for us.
     </p>
-    <button class="button" onclick="startExperience()">
-      Open our story & play music ↓
+
+    <button class="button" id="story-button" type="button">
+      Open our story &darr;
     </button>
   </header>
 
@@ -437,12 +1213,14 @@
 
       <div class="counter-card">
         <div class="eyebrow">Every second with you counts</div>
-        <div class="counter" id="counter">
+
+        <div class="counter" id="counter" aria-label="Time since our relationship began">
           <div class="counter-unit"><strong>--</strong><span>Days</span></div>
           <div class="counter-unit"><strong>--</strong><span>Hours</span></div>
           <div class="counter-unit"><strong>--</strong><span>Minutes</span></div>
           <div class="counter-unit"><strong>--</strong><span>Seconds</span></div>
         </div>
+
         <p class="handwritten" style="font-size:27px;margin:0">
           And counting, baby. ♡
         </p>
@@ -455,181 +1233,862 @@
 
       <div class="timeline">
         <article class="moment">
-          <time>October 18, 2024</time>
+          <time datetime="2024-10-18">October 18, 2024</time>
           <h3>The beginning of us</h3>
           <p>We met through friends in front of a bar. Neither of us knew how much that night would come to mean.</p>
         </article>
+
         <article class="moment">
           <time>That late night</time>
           <h3>Our first kiss</h3>
           <p>Walking through the park after our first official meet, we kissed before you got into your car.</p>
         </article>
+
         <article class="moment">
           <time>All the days in between</time>
           <h3>The little things</h3>
           <p>Your smile, our conversations, the way you fit in with my family, and the food you make for me.</p>
         </article>
+
         <article class="moment">
-          <time>October 18, 2026</time>
+          <time datetime="2026-10-18">October 18, 2026</time>
           <h3>Two years, baby</h3>
           <p>Two years of memories, love, laughter, and a whole world still waiting for us.</p>
         </article>
       </div>
     </section>
 
-    <section>
+    <section class="gallery-section" id="our-memories">
       <h2 class="section-title">Our memories</h2>
       <p class="section-subtitle">
-        Every photo is a piece of our story. (Handling all 47 vertical & horizontal pictures cleanly!)
+        Click any photo to view it up close. Every picture tells a little piece of our story.
       </p>
 
-      <!-- Gallery for your 47 images (add as many as you need here) -->
-      <div class="gallery">
-        <div class="polaroid"><img src="images/photo1.jpg" alt="Memory" loading="lazy"><p>My favourite person ♡</p></div>
-        <div class="polaroid"><img src="images/photo2.jpg" alt="Memory" loading="lazy"><p>One for the memories</p></div>
-        <div class="polaroid"><img src="images/photo3.jpg" alt="Memory" loading="lazy"><p>Just us</p></div>
-        <div class="polaroid"><img src="images/photo4.jpg" alt="Memory" loading="lazy"><p>My favourite weirdo</p></div>
-        <div class="polaroid"><img src="images/photo5.jpg" alt="Memory" loading="lazy"><p>Another adventure</p></div>
-        <div class="polaroid"><img src="images/photo6.jpg" alt="Memory" loading="lazy"><p>Still my favourite</p></div>
-        <!-- You can paste up to photo47.jpg here following the same structure! -->
+      <div class="gallery-controls" aria-label="Photo gallery navigation">
+        <button type="button" id="gallery-prev" disabled>&larr; Previous</button>
+        <span class="gallery-page" id="gallery-page" aria-live="polite">1 / 8</span>
+        <button type="button" id="gallery-next">Next &rarr;</button>
       </div>
+
+      <div class="gallery" id="gallery" aria-label="Our photo memories"></div>
+
+      <p class="gallery-status" id="gallery-status" aria-live="polite"></p>
     </section>
 
     <section>
       <h2 class="section-title">A song from me to you</h2>
-      <p class="section-subtitle">I made this one for you. Whenever you listen, I hope it reminds you of us.</p>
+      <p class="section-subtitle">
+        I made this one for you. Press play and let it be our little soundtrack.
+      </p>
 
       <div class="song-card">
-        <div class="album-art">♫ ♡</div>
+        <div class="album-art" aria-hidden="true">♫ ♡</div>
         <div class="eyebrow">An original song by Philip</div>
         <h3>Home</h3>
         <p>For Daphne, with love.</p>
-        <audio id="bg-audio" controls preload="metadata">
+
+        <audio id="bg-audio" controls loop preload="metadata">
           <source src="audio/home.mp3" type="audio/mpeg">
           Your browser does not support audio playback.
         </audio>
+
+        <p class="audio-note" id="audio-note" aria-live="polite">
+          Your song is ready. Press play to listen.
+        </p>
+      </div>
+    </section>
+
+    <section id="our-soundboard">
+      <h2 class="section-title">Our little soundboard ♡</h2>
+      <p class="section-subtitle">
+        Eight little sounds just for us. Tap one whenever you need a smile.
+      </p>
+
+      <div class="soundboard-card">
+      <div class="soundboard-grid" aria-label="Soundboard">
+        <button class="sound-button" type="button"
+          data-sound="audio/sounds/donkey-shrek.mp3" data-sound-name="Donkey">
+          <img class="sound-icon" src="images/sounds/donkey-shrek.jpg" alt="" loading="lazy">
+          <span class="sound-label">Donkey</span>
+        </button>
+
+        <button class="sound-button" type="button"
+          data-sound="audio/sounds/fahhh.mp3" data-sound-name="FAHHH">
+          <img class="sound-icon" src="images/sounds/screaming-guy.jpg" alt="" loading="lazy">
+          <span class="sound-label">FAHHH</span>
+        </button>
+
+        <button class="sound-button" type="button"
+          data-sound="audio/sounds/patrik.mp3" data-sound-name="Patrick">
+          <img class="sound-icon" src="images/sounds/patrik.jpg" alt="" loading="lazy">
+          <span class="sound-label">Patrick</span>
+        </button>
+
+        <button class="sound-button" type="button"
+          data-sound="audio/sounds/meow.mp3" data-sound-name="Meow">
+          <img class="sound-icon" src="images/sounds/ai-cat.jpg" alt="" loading="lazy">
+          <span class="sound-label">Meow</span>
+        </button>
+
+        <button class="sound-button" type="button"
+          data-sound="audio/sounds/door-closed.mp3" data-sound-name="Door Slam">
+          <img class="sound-icon" src="images/sounds/real-housewives-door.jpg" alt="" loading="lazy">
+          <span class="sound-label">Door Slam</span>
+        </button>
+
+        <button class="sound-button" type="button"
+          data-sound="audio/sounds/dotheroar.mp3" data-sound-name="Do the Roar">
+          <img class="sound-icon" src="images/sounds/dotheroar.jpg" alt="" loading="lazy">
+          <span class="sound-label">Do the Roar</span>
+        </button>
+
+        <button class="sound-button" type="button"
+          data-sound="audio/sounds/breakingnews.mp3" data-sound-name="Breaking News">
+          <img class="sound-icon" src="images/sounds/fake-news.jpg" alt="" loading="lazy">
+          <span class="sound-label">Fake News</span>
+        </button>
+
+        <button class="sound-button" type="button"
+          data-sound="audio/sounds/classy-party.mp3" data-sound-name="Classy Party">
+          <img class="sound-icon" src="images/sounds/real-housewives-party.jpg" alt="" loading="lazy">
+          <span class="sound-label">Classy Party</span>
+        </button>
+      </div>
       </div>
     </section>
 
     <section>
       <h2 class="section-title">A few things I love about you</h2>
+
       <div class="reasons">
-        <div class="reason"><span>♡</span> Your smile. It gets me every time.</div>
-        <div class="reason"><span>♡</span> How smart, funny, beautiful, and genuine you are.</div>
-        <div class="reason"><span>♡</span> How easy it is to talk to you about anything.</div>
-        <div class="reason"><span>♡</span> The way you've become part of my family.</div>
-        <div class="reason"><span>♡</span> How hard you work and how thoughtful you are.</div>
-        <div class="reason"><span>♡</span> Your Italian sausage pasta and homemade cinnamon buns.</div>
+        <div class="reason"><span aria-hidden="true">♡</span>Your smile. It gets me every time.</div>
+        <div class="reason"><span aria-hidden="true">♡</span>How smart, funny, beautiful, and genuine you are.</div>
+        <div class="reason"><span aria-hidden="true">♡</span>How easy it is to talk to you about anything.</div>
+        <div class="reason"><span aria-hidden="true">♡</span>The way you've become part of my family.</div>
+        <div class="reason"><span aria-hidden="true">♡</span>How hard you work and how thoughtful you are.</div>
+        <div class="reason"><span aria-hidden="true">♡</span>Your Italian sausage pasta and homemade cinnamon buns.</div>
       </div>
     </section>
 
     <section>
       <div class="travel-card">
-        <p class="japan">富士山 ♡</p>
+        <p class="japan" aria-label="Mount Fuji">富士山 ♡</p>
         <h2 class="section-title">Our next adventure</h2>
-        <p class="section-subtitle" style="margin-bottom:10px">One day, Japan. Then wherever else life takes us.</p>
-        <p class="handwritten" style="font-size:27px">The world is better with you in it.</p>
+        <p class="section-subtitle">
+          One day, Japan. Then wherever else life takes us.
+        </p>
+        <p class="handwritten" style="font-size:27px">
+          The world is better with you in it.
+        </p>
+      </div>
+      <div class="japan-gallery">
+      <figure class="japan-photo">
+        <img
+          src="images/japan1.jpg"
+          alt="Japan trip photo 1"
+          loading="lazy"
+        >
+      </figure>
+
+      <figure class="japan-photo">
+        <img
+          src="images/japan2.jpg"
+          alt="Japan trip photo 2"
+          loading="lazy"
+        >
+      </figure>
+
+      <figure class="japan-photo">
+        <img
+          src="images/japan3.jpg"
+          alt="Japan trip photo 3"
+          loading="lazy"
+        >
+      </figure>
+    </div>
+
+      <div class="flight-map-card">
+        <h3 class="flight-map-heading">From Montréal to Japan ♡</h3>
+        <p class="flight-map-caption">One day, we'll cross the world together.</p>
+
+        <svg class="flight-map" viewBox="0 0 900 390" role="img"
+             aria-labelledby="flight-map-title flight-map-desc">
+          <title id="flight-map-title">Our dream journey from Montréal to Japan</title>
+          <desc id="flight-map-desc">A pastel illustrated world map with a dotted curved route from Montréal to Japan and an animated airplane travelling along it.</desc>
+
+          <g class="map-land">
+            <path d="M75 100 L108 72 150 67 174 85 205 82 224 101 212 120 229 137 210 153 193 148 181 173 158 179 149 204 128 214 111 194 96 181 89 154 70 139 61 119 Z"/>
+            <path d="M171 191 L190 194 201 216 211 237 203 259 218 279 210 300 197 284 187 261 178 241 166 220 Z"/>
+            <path d="M236 52 L270 43 293 60 282 84 260 96 240 82 Z"/>
+            <path d="M230 251 L256 242 279 256 287 280 279 304 267 327 259 354 245 342 240 315 228 294 220 272 Z"/>
+            <path d="M400 111 L424 96 446 101 457 116 447 130 427 129 416 143 397 137 Z"/>
+            <path d="M411 151 L445 145 465 163 459 190 447 218 432 240 416 224 410 198 399 176 Z"/>
+            <path d="M466 150 L495 143 519 158 527 185 515 213 502 241 485 257 474 234 465 210 453 188 Z"/>
+            <path d="M460 103 L489 82 532 75 563 87 594 78 623 88 651 78 684 92 708 110 741 112 759 132 744 149 715 145 699 163 670 159 652 176 626 165 610 147 585 154 566 136 541 143 526 126 502 133 482 121 Z"/>
+            <path d="M553 151 L578 158 588 180 579 204 567 194 560 174 Z"/>
+            <path d="M600 184 L622 188 636 202 625 211 608 202 Z"/>
+            <path d="M744 162 L754 171 750 183 742 179 Z"/>
+            <path d="M760 185 L770 196 765 209 756 201 Z"/>
+            <path d="M686 251 L718 239 750 250 760 272 744 291 714 294 690 279 678 263 Z"/>
+          </g>
+
+          <path id="flight-route-path" class="flight-route"
+                d="M174 147 C310 25, 515 28, 754 185" />
+
+          <circle class="flight-map-pin" cx="174" cy="147" r="8"/>
+          <circle class="flight-map-pin" cx="754" cy="185" r="8"/>
+
+          <text class="flight-map-label" x="72" y="125">MONTRÉAL</text>
+          <text class="flight-map-small" x="72" y="155">WE LIVE HERE</text>
+          <text class="flight-map-label" x="674" y="220">JAPAN</text>
+          <text class="flight-map-small" x="674" y="245">LETS GO ♡</text>
+
+          <text class="flight-plane" aria-hidden="true">✈
+            <animateMotion dur="6s" repeatCount="indefinite" rotate="auto">
+              <mpath href="#flight-route-path"/>
+            </animateMotion>
+          </text>
+        </svg>
+
+        <p class="flight-map-note">The world is waiting for us, baby. ♡</p>
       </div>
     </section>
 
     <section class="letter-section">
       <h2 class="section-title">A letter for you</h2>
-      <p class="section-subtitle">Some things deserve more than a text message.</p>
+      <p class="section-subtitle">I told you I would blow your letter out of the water</p>
 
-      <button class="envelope" id="envelope" aria-label="Open your love letter" aria-expanded="false" onclick="toggleLetter()"></button>
-      <p class="handwritten" style="font-size:25px">Click to open, baby.</p>
+      <button
+        class="envelope"
+        id="envelope"
+        type="button"
+        aria-label="Open your love letter"
+        aria-expanded="false"
+        aria-controls="letter-paper"
+      ></button>
 
-      <div class="letter-paper" id="letter-paper">
+      <span class="envelope-label">Click to open, baby.</span>
+
+
+      <div class="letter-paper" id="letter-paper" hidden>
         <h3>To my Daphne ♡</h3>
-        <textarea id="letter" placeholder="My baby, write whatever is in your heart here..."></textarea>
-        <button class="button" onclick="copyLetter()">Copy my letter</button>
+
+        <div class="letter-content" id="letter-content">
+          <p>My dearest Daphne,</p>
+
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
+            nisi ut aliquip ex ea commodo consequat.
+          </p>
+
+          <p>
+            Duis aute irure dolor in reprehenderit in voluptate velit esse
+            cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+            cupidatat non proident, sunt in culpa qui officia deserunt mollit
+            anim id est laborum.
+          </p>
+
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            Pellentesque habitant morbi tristique senectus et netus et malesuada
+            fames ac turpis egestas. Integer posuere erat a ante venenatis
+            dapibus posuere velit aliquet.
+          </p>
+
+          <p>
+            With all my love, today and always,
+            <br>
+            Philip ♡
+          </p>
+        </div>
+
+        <button class="button" id="copy-letter" type="button">
+          Copy my letter
+        </button>
+
         <p class="letter-note" id="copy-status" aria-live="polite"></p>
       </div>
+
     </section>
   </main>
 
-  <footer class="final">
-    <div class="heart">♡</div>
-    <div class="eyebrow">To be continued</div>
+  <div class="final">
+    <div class="heart" aria-hidden="true">♡</div>
     <h2>Until next year,<br>baby.</h2>
-    <p>This isn't the end of our story. It's another chapter in a life I want to keep building with you.</p>
+    <p>Can't wait for that FREE Texas Road House mmmmhmmmmmm</p>
     <div class="handwritten" style="font-size:32px">I love you, Daphne. ♡</div>
-  </footer>
+  </div>
 
   <script>
-    // Dynamic Welcome Subtitle Rotator
+    "use strict";
+
+    // --------------------------------------------------
+    // 1. PHOTO DATA
+    // Edit captions here. Photos live in the images folder.
+    // --------------------------------------------------
+
+    const photoCaptions = [
+      "2 cuties ♡",
+      "Dafuq?",
+      "Been there with me everywhere",
+      "We can look sexy 2",
+      "Another adventure",
+      "Still my favourite time",
+      "BONGQUISHAAA",
+      "My little Chat Rat",
+      "Sexy Gyal",
+      "EGG ♡",
+      "Unforgettable",
+      "Unforgettable X2",
+      "PORTUGALLL",
+      "Hiking baddie",
+      "Show it off gurl",
+      "At the very start",
+      "Just 2 big backs",
+      "Your best outfit tbh",
+      "Best day",
+      "Floridaaaa MAGA",
+      "Model #1",
+      "Spooky Season",
+      "You & Me",
+      "Smile :)",
+      "RAT RAT RAT",
+      "Remember?",
+      "Adventure",
+      "My family loves u",
+      "Joy",
+      "So beautiful",
+      "Damn bitch",
+      "Red hair daphne",
+      "Gym Girl",
+      "Weeeeeeeeeee",
+      "Airport time",
+      "My love",
+      "Holding you",
+      "Lots more to come!",
+      "peacook",
+      "True love",
+      "At the very start",
+    ];
+
+    const photos = photoCaptions.map((caption, index) => ({
+      src: `images/photo${index + 1}.jpg`,
+      caption,
+      alt: caption
+    }));
+
+    // --------------------------------------------------
+    // 2. WELCOME SUBTITLE
+    // --------------------------------------------------
+
     const subtitles = [
       "A little scrapbook of us, the memories we've made, and all the moments still waiting for us.",
       "Two years down, a lifetime to go, baby. ♡",
       "Every picture here is a piece of my favorite story."
     ];
-    let subIndex = 0;
-    const subElement = document.getElementById("dynamic-subtitle");
-    
-    setInterval(() => {
-      subElement.style.opacity = 0;
-      setTimeout(() => {
-        subIndex = (subIndex + 1) % subtitles.length;
-        subElement.textContent = subtitles[subIndex];
-        subElement.style.opacity = 1;
-      }, 400);
-    }, 4500);
-    subElement.style.transition = "opacity 0.4s ease";
 
-    // Play Audio & Scroll on Button Click (Bypasses Browser Autoplay Restrictions)
-    function startExperience() {
-      const audio = document.getElementById("bg-audio");
-      audio.play().catch(e => console.log("Audio play blocked or waiting user interaction"));
-      document.querySelector('#our-story').scrollIntoView({ behavior: 'smooth' });
+    const subtitleElement = document.getElementById("dynamic-subtitle");
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    let subtitleIndex = 0;
+    let subtitleTimer = null;
+
+    function startSubtitleRotation() {
+      if (reduceMotion.matches || subtitleTimer !== null) return;
+
+      subtitleTimer = window.setInterval(() => {
+        subtitleElement.style.opacity = "0";
+
+        window.setTimeout(() => {
+          subtitleIndex = (subtitleIndex + 1) % subtitles.length;
+          subtitleElement.textContent = subtitles[subtitleIndex];
+          subtitleElement.style.opacity = "1";
+        }, 400);
+      }, 4500);
     }
 
-    // Relationship counter
-    const startDate = new Date(2024, 9, 18, 0, 0, 0);
-    function updateCounter() {
-      const elapsed = Math.max(0, Date.now() - startDate.getTime());
-      const seconds = Math.floor(elapsed / 1000);
-      const days = Math.floor(seconds / 86400);
-      const hours = Math.floor((seconds % 86400) / 3600);
-      const minutes = Math.floor((seconds % 3600) / 60);
-      const remainingSeconds = seconds % 60;
-
-      const values = [days, hours, minutes, remainingSeconds];
-      document.querySelectorAll("#counter .counter-unit strong")
-        .forEach((el, i) => el.textContent = values[i].toLocaleString());
-    }
-    updateCounter();
-    setInterval(updateCounter, 1000);
-
-    function toggleLetter() {
-      const envelope = document.getElementById("envelope");
-      const paper = document.getElementById("letter-paper");
-      const isOpen = paper.classList.toggle("visible");
-      envelope.classList.toggle("open", isOpen);
-      envelope.setAttribute("aria-expanded", String(isOpen));
-      if (isOpen) paper.scrollIntoView({ behavior: "smooth", block: "center" });
-    }
-
-    async function copyLetter() {
-      const letter = document.getElementById("letter");
-      const status = document.getElementById("copy-status");
-      try {
-        await navigator.clipboard.writeText(letter.value);
-        status.textContent = "Copied! Save your letter somewhere safe.";
-      } catch (error) {
-        status.textContent = "Select the text and copy it manually.";
+    function stopSubtitleRotation() {
+      if (subtitleTimer !== null) {
+        window.clearInterval(subtitleTimer);
+        subtitleTimer = null;
       }
     }
 
+    startSubtitleRotation();
+
+    reduceMotion.addEventListener?.("change", () => {
+      if (reduceMotion.matches) {
+        stopSubtitleRotation();
+        subtitleElement.style.opacity = "1";
+      } else {
+        startSubtitleRotation();
+      }
+    });
+
+    document.addEventListener("visibilitychange", () => {
+      if (document.hidden) {
+        stopSubtitleRotation();
+      } else {
+        startSubtitleRotation();
+      }
+    });
+
+    document.getElementById("story-button").addEventListener("click", () => {
+      document.getElementById("our-story").scrollIntoView({
+        behavior: reduceMotion.matches ? "auto" : "smooth",
+        block: "start"
+      });
+    });
+
+    // --------------------------------------------------
+    // 3. ANNIVERSARY COUNTER
+    // Uses the visitor's local timezone.
+    // --------------------------------------------------
+
+    const startDate = new Date(2024, 9, 18, 0, 0, 0);
+    const counterElements = document.querySelectorAll(
+      "#counter .counter-unit strong"
+    );
+
+    function updateCounter() {
+      const elapsed = Math.max(0, Date.now() - startDate.getTime());
+      const totalSeconds = Math.floor(elapsed / 1000);
+
+      const values = [
+        Math.floor(totalSeconds / 86400),
+        Math.floor((totalSeconds % 86400) / 3600),
+        Math.floor((totalSeconds % 3600) / 60),
+        totalSeconds % 60
+      ];
+
+      counterElements.forEach((element, index) => {
+        element.textContent = values[index].toLocaleString();
+      });
+    }
+
+    updateCounter();
+    window.setInterval(updateCounter, 1000);
+
+    // --------------------------------------------------
+    // 4. GALLERY
+    // Only load the current page's images.
+    // Changing pages preserves the page's scroll position.
+    // --------------------------------------------------
+
+    const gallery = document.getElementById("gallery");
+    const galleryPageLabel = document.getElementById("gallery-page");
+    const galleryPrev = document.getElementById("gallery-prev");
+    const galleryNext = document.getElementById("gallery-next");
+    const galleryStatus = document.getElementById("gallery-status");
+
+    const photosPerPage = 6;
+    const totalPages = Math.ceil(photos.length / photosPerPage);
+    let currentPage = 0;
+
+    function createPhotoCard(photo, index) {
+      const figure = document.createElement("figure");
+      figure.className = "polaroid";
+      figure.hidden = true;
+
+      const img = document.createElement("img");
+      img.dataset.src = photo.src;
+      img.alt = photo.alt;
+      img.loading = "lazy";
+      img.decoding = "async";
+      img.tabIndex = 0;
+      img.setAttribute("role", "button");
+      img.setAttribute("aria-label", `View photo ${index + 1}: ${photo.caption}`);
+      img.dataset.photoIndex = String(index);
+
+      img.addEventListener("click", () => openLightbox(index));
+
+      img.addEventListener("keydown", (event) => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          openLightbox(index);
+        }
+      });
+
+      img.addEventListener("error", () => {
+        img.dataset.failed = "true";
+        galleryStatus.textContent =
+          `Couldn't load ${photo.src}. Check the filename and images folder.`;
+      });
+
+      const caption = document.createElement("figcaption");
+      caption.className = "polaroid-caption";
+
+      const captionText = document.createElement("p");
+      captionText.textContent = photo.caption;
+
+      caption.appendChild(captionText);
+      figure.append(img, caption);
+
+      return figure;
+    }
+
+    const photoCards = photos.map((photo, index) => {
+      const card = createPhotoCard(photo, index);
+      gallery.appendChild(card);
+      return card;
+    });
+
+    function loadPhoto(index) {
+      const img = photoCards[index].querySelector("img");
+
+      if (!img.getAttribute("src") && img.dataset.src) {
+        img.src = img.dataset.src;
+      }
+    }
+
+    function renderGallery() {
+      const start = currentPage * photosPerPage;
+      const end = Math.min(start + photosPerPage, photos.length);
+
+      photoCards.forEach((card, index) => {
+        const visible = index >= start && index < end;
+        card.hidden = !visible;
+
+        if (visible) {
+          loadPhoto(index);
+        }
+      });
+
+      galleryPageLabel.textContent = `${currentPage + 1} / ${totalPages}`;
+      galleryPrev.disabled = currentPage === 0;
+      galleryNext.disabled = currentPage >= totalPages - 1;
+
+      galleryStatus.textContent =
+        `Showing photos ${start + 1}–${end} of ${photos.length}.`;
+    }
+
+    function changeGallery(direction) {
+      const nextPage = Math.max(
+        0,
+        Math.min(totalPages - 1, currentPage + direction)
+      );
+
+      if (nextPage === currentPage) return;
+
+      // Save the viewport position before changing the visible cards.
+      const scrollPosition = window.scrollY;
+
+      currentPage = nextPage;
+      renderGallery();
+
+      // Prevent image/card height changes from moving the visitor.
+      window.requestAnimationFrame(() => {
+        window.scrollTo({
+          top: scrollPosition,
+          left: 0,
+          behavior: "instant"
+        });
+      });
+    }
+
+    galleryPrev.addEventListener("click", () => changeGallery(-1));
+    galleryNext.addEventListener("click", () => changeGallery(1));
+
+    renderGallery();
+
+    // --------------------------------------------------
+    // 5. ACCESSIBLE LIGHTBOX
+    // Previous/next, Escape, arrow keys and focus handling.
+    // --------------------------------------------------
+
+    const lightbox = document.getElementById("lightbox");
+    const lightboxImg = document.getElementById("lightbox-img");
+    const lightboxCaption = document.getElementById("lightbox-caption");
+    const lightboxCount = document.getElementById("lightbox-count");
+    const lightboxClose = document.getElementById("lightbox-close");
+    const lightboxPrev = document.getElementById("lightbox-prev");
+    const lightboxNext = document.getElementById("lightbox-next");
+
+    let lightboxIndex = 0;
+    let previouslyFocusedElement = null;
+
+    function showLightboxPhoto(index) {
+      lightboxIndex = (index + photos.length) % photos.length;
+
+      const photo = photos[lightboxIndex];
+
+      lightboxImg.src = photo.src;
+      lightboxImg.alt = photo.alt;
+      lightboxCaption.textContent = photo.caption;
+      lightboxCount.textContent = `${lightboxIndex + 1} / ${photos.length}`;
+
+      lightboxPrev.disabled = photos.length < 2;
+      lightboxNext.disabled = photos.length < 2;
+    }
+
+    function openLightbox(index) {
+      previouslyFocusedElement = document.activeElement;
+
+      showLightboxPhoto(index);
+      lightbox.classList.add("active");
+      lightbox.setAttribute("aria-hidden", "false");
+      document.body.classList.add("modal-open");
+
+      lightboxClose.focus();
+    }
+
+    function closeLightbox() {
+      if (!lightbox.classList.contains("active")) return;
+
+      lightbox.classList.remove("active");
+      lightbox.setAttribute("aria-hidden", "true");
+      document.body.classList.remove("modal-open");
+
+      lightboxImg.removeAttribute("src");
+
+      if (previouslyFocusedElement instanceof HTMLElement) {
+        previouslyFocusedElement.focus({ preventScroll: true });
+      }
+    }
+
+    function moveLightbox(direction) {
+      showLightboxPhoto(lightboxIndex + direction);
+    }
+
+    lightboxClose.addEventListener("click", closeLightbox);
+    lightboxPrev.addEventListener("click", () => moveLightbox(-1));
+    lightboxNext.addEventListener("click", () => moveLightbox(1));
+
+    lightbox.addEventListener("click", (event) => {
+      if (event.target === lightbox) {
+        closeLightbox();
+      }
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (!lightbox.classList.contains("active")) return;
+
+      if (event.key === "Escape") {
+        closeLightbox();
+      } else if (event.key === "ArrowLeft") {
+        event.preventDefault();
+        moveLightbox(-1);
+      } else if (event.key === "ArrowRight") {
+        event.preventDefault();
+        moveLightbox(1);
+      } else if (event.key === "Tab") {
+        // Keep keyboard focus within the open photo viewer.
+        const focusable = [lightboxClose, lightboxPrev, lightboxNext];
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+
+        if (event.shiftKey && document.activeElement === first) {
+          event.preventDefault();
+          last.focus();
+        } else if (!event.shiftKey && document.activeElement === last) {
+          event.preventDefault();
+          first.focus();
+        }
+      }
+    });
+
+    // --------------------------------------------------
+    // 6. MUSIC
+    // Autoplay with sound is restricted by many browsers.
+    // Keep the controls available and provide useful feedback.
+    // --------------------------------------------------
+
+    const audio = document.getElementById("bg-audio");
+    const audioNote = document.getElementById("audio-note");
+
+    audio.volume = 0.8;
+
+    audio.addEventListener("play", () => {
+      audioNote.textContent = "Playing our song. ♡";
+    });
+
+    audio.addEventListener("pause", () => {
+      audioNote.textContent = "Paused. Press play whenever you're ready.";
+    });
+
+    audio.addEventListener("error", () => {
+      audioNote.textContent =
+        "The song couldn't load. Check that audio/home.mp3 exists.";
+    });
+
+    // Browsers can block autoplay. Attempt it, but never depend on it.
+    window.addEventListener("load", () => {
+      audio.play().catch(() => {
+        audioNote.textContent = "Press play to listen to our song. ♡";
+      });
+    });
+
+    // --------------------------------------------------
+    // 7. LOVE LETTER
+    // --------------------------------------------------
+
+    const envelope = document.getElementById("envelope");
+    const letterPaper = document.getElementById("letter-paper");
+    const letterTextarea = document.getElementById("letter");
+    const copyStatus = document.getElementById("copy-status");
+    const copyButton = document.getElementById("copy-letter");
+
+    function toggleLetter() {
+      const isOpen = envelope.getAttribute("aria-expanded") !== "true";
+
+      envelope.classList.toggle("open", isOpen);
+      envelope.setAttribute("aria-expanded", String(isOpen));
+      envelope.setAttribute(
+        "aria-label",
+        isOpen ? "Close your love letter" : "Open your love letter"
+      );
+
+      letterPaper.hidden = !isOpen;
+      letterPaper.classList.toggle("visible", isOpen);
+
+      if (isOpen) {
+        window.setTimeout(() => {
+          letterTextarea.focus({ preventScroll: true });
+        }, 100);
+      }
+    }
+
+    envelope.addEventListener("click", toggleLetter);
+
+    async function copyLetter() {
+      const text = letterTextarea.value;
+
+      if (!text.trim()) {
+        copyStatus.textContent = "Write your letter first, baby. ♡";
+        letterTextarea.focus();
+        return;
+      }
+
+      try {
+        if (navigator.clipboard && window.isSecureContext) {
+          await navigator.clipboard.writeText(text);
+        } else {
+          // Fallback for browsers without Clipboard API access.
+          letterTextarea.focus();
+          letterTextarea.select();
+
+          const copied = document.execCommand("copy");
+
+          if (!copied) {
+            throw new Error("Copy command failed");
+          }
+        }
+
+        copyStatus.textContent = "Copied! Save your letter somewhere safe. ♡";
+      } catch (error) {
+        copyStatus.textContent =
+          "Copy wasn't available. Select the text above and copy it manually.";
+        letterTextarea.focus();
+        letterTextarea.select();
+      }
+    }
+
+    copyButton.addEventListener("click", copyLetter);
+
+    // --------------------------------------------------
+    // 8. SOUNDBOARD
+    // These use separate Audio objects, so sound effects do not pause the song.
+    // Sound clips belong in audio/sounds/ (see each button's data-sound path).
+    // --------------------------------------------------
+
+    const soundboardButtons = document.querySelectorAll(".sound-button");
+    const soundboardStatus = document.getElementById("soundboard-status");
+    const soundboardPlayers = new Map();
+
+    soundboardButtons.forEach((button) => {
+      const source = button.dataset.sound;
+      const name = button.dataset.soundName || "Sound";
+      const player = new Audio(source);
+      player.preload = "none";
+      soundboardPlayers.set(button, player);
+
+      player.addEventListener("ended", () => {
+        if (soundboardStatus) soundboardStatus.textContent = `Played: ${name} ♡`;
+      });
+
+      player.addEventListener("error", () => {
+        if (soundboardStatus) {
+          soundboardStatus.textContent = `Couldn't load ${name}. Check that ${source} exists and the filename matches. ♡`;
+        }
+      });
+
+      button.addEventListener("click", async () => {
+        // Stop only another soundboard clip, never the background song.
+        soundboardPlayers.forEach((otherPlayer, otherButton) => {
+          if (otherButton !== button) {
+            otherPlayer.pause();
+            otherPlayer.currentTime = 0;
+          }
+        });
+
+        player.pause();
+        player.currentTime = 0;
+        if (soundboardStatus) soundboardStatus.textContent = `Playing: ${name} ♡`;
+
+        try {
+          await player.play();
+        } catch (error) {
+          if (soundboardStatus) {
+            soundboardStatus.textContent = `Add the sound file at ${source}, then try again. ♡`;
+          }
+        }
+      });
+    });
+
+    // --------------------------------------------------
+    // 9. FLOATING HEARTS
+    // Pause when the tab is hidden; disable for reduced motion.
+    // --------------------------------------------------
+
+    let heartTimer = null;
+
     function createHeart() {
+      if (document.hidden || reduceMotion.matches) return;
+
       const heart = document.createElement("span");
       heart.className = "floating-heart";
+      heart.setAttribute("aria-hidden", "true");
       heart.textContent = Math.random() > 0.5 ? "♡" : "♥";
-      heart.style.left = Math.random() * 100 + "vw";
-      heart.style.fontSize = (12 + Math.random() * 15) + "px";
+      heart.style.left = `${Math.random() * 100}vw`;
+      heart.style.fontSize = `${50 + Math.random() * 15}px`;
+
       document.body.appendChild(heart);
-      setTimeout(() => heart.remove(), 5000);
+
+      window.setTimeout(() => heart.remove(), 5000);
     }
-    setInterval(createHeart, 1800);
+
+    function startHeartAnimation() {
+      if (reduceMotion.matches || document.hidden || heartTimer !== null) return;
+      heartTimer = window.setInterval(createHeart, 1000);
+    }
+
+    function stopHeartAnimation() {
+      if (heartTimer !== null) {
+        window.clearInterval(heartTimer);
+        heartTimer = null;
+      }
+
+      document.querySelectorAll(".floating-heart").forEach((heart) => heart.remove());
+    }
+
+    startHeartAnimation();
+
+    document.addEventListener("visibilitychange", () => {
+      if (document.hidden) {
+        stopHeartAnimation();
+      } else {
+        startHeartAnimation();
+      }
+    });
+
+    reduceMotion.addEventListener?.("change", () => {
+      if (reduceMotion.matches) {
+        stopHeartAnimation();
+      } else {
+        startHeartAnimation();
+      }
+    });
   </script>
 </body>
 </html>
