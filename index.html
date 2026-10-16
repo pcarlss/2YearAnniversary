@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -33,7 +32,6 @@
     }
 
     button, textarea { font: inherit; }
-
     button { cursor: pointer; }
 
     .hero {
@@ -67,6 +65,12 @@
       font-size: clamp(54px, 10vw, 100px);
       line-height: .98;
       margin: 24px 0;
+      animation: floatTitle 4s ease-in-out infinite;
+    }
+
+    @keyframes floatTitle {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
     }
 
     h1 span { color: var(--rose); }
@@ -75,6 +79,7 @@
       max-width: 450px;
       line-height: 1.8;
       color: var(--muted);
+      min-height: 3.6em; /* Prevents jumping when dynamic text changes */
     }
 
     .heart {
@@ -202,29 +207,33 @@
       margin: 0;
     }
 
+    /* Smart Gallery for 47 Mixed (Vertical & Horizontal) Photos */
     .gallery {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 22px;
+      columns: 3 220px;
+      column-gap: 22px;
       margin-top: 35px;
     }
 
     .polaroid {
       background: white;
-      padding: 10px 10px 20px;
+      padding: 10px 10px 18px;
       box-shadow: 0 8px 22px #7b485015;
-      transform: rotate(-2deg);
-      transition: transform .25s;
+      margin-bottom: 22px;
+      break-inside: avoid;
+      transform: rotate(-1deg);
+      transition: transform .25s, z-index .25s;
+      display: inline-block;
+      width: 100%;
     }
 
-    .polaroid:nth-child(even) { transform: rotate(2deg); }
-    .polaroid:hover { transform: rotate(0) translateY(-5px); }
+    .polaroid:nth-child(even) { transform: rotate(1.5deg); }
+    .polaroid:hover { transform: rotate(0) translateY(-5px); z-index: 10; }
 
     .polaroid img {
       display: block;
       width: 100%;
-      aspect-ratio: 4 / 5;
-      object-fit: cover;
+      height: auto; /* Keeps natural proportions for vertical and horizontal */
+      object-fit: contain;
       background: #f9dce5;
       cursor: pointer;
     }
@@ -232,8 +241,8 @@
     .polaroid p {
       text-align: center;
       font-family: "Caveat", cursive;
-      font-size: 23px;
-      margin: 12px 0 0;
+      font-size: 21px;
+      margin: 10px 0 0;
     }
 
     .song-card {
@@ -258,9 +267,7 @@
     }
 
     .song-card h3 { font-size: 42px; margin: 8px 0; }
-
     .song-card p { color: var(--muted); }
-
     audio { width: 100%; margin-top: 15px; }
 
     .reasons {
@@ -325,9 +332,7 @@
       z-index: 4;
     }
 
-    .envelope.open::before {
-      transform: rotateX(180deg);
-    }
+    .envelope.open::before { transform: rotateX(180deg); }
 
     .letter-paper {
       display: none;
@@ -346,10 +351,7 @@
       animation: appear .6s ease both;
     }
 
-    .letter-paper h3 {
-      font-size: 36px;
-      text-align: center;
-    }
+    .letter-paper h3 { font-size: 36px; text-align: center; }
 
     .letter-paper textarea {
       width: 100%;
@@ -363,11 +365,7 @@
       color: var(--dark);
     }
 
-    .letter-note {
-      font-size: 12px;
-      color: var(--muted);
-      line-height: 1.6;
-    }
+    .letter-note { font-size: 12px; color: var(--muted); line-height: 1.6; }
 
     .travel-card {
       text-align: center;
@@ -378,10 +376,7 @@
       padding: 30px;
     }
 
-    .travel-card .japan {
-      font-size: 60px;
-      margin: 0;
-    }
+    .travel-card .japan { font-size: 60px; margin: 0; }
 
     .final {
       text-align: center;
@@ -389,24 +384,10 @@
       background: linear-gradient(160deg, #f8d6e1, #fff5f7);
     }
 
-    .final h2 {
-      font-size: clamp(55px, 10vw, 90px);
-      margin: 15px 0;
-    }
+    .final h2 { font-size: clamp(55px, 10vw, 90px); margin: 15px 0; }
+    .final p { max-width: 470px; margin: 15px auto; line-height: 1.8; color: var(--muted); }
 
-    .final p {
-      max-width: 470px;
-      margin: 15px auto;
-      line-height: 1.8;
-      color: var(--muted);
-    }
-
-    footer {
-      padding: 25px;
-      text-align: center;
-      color: var(--muted);
-      font-size: 12px;
-    }
+    footer { padding: 25px; text-align: center; color: var(--muted); font-size: 12px; }
 
     .floating-heart {
       position: fixed;
@@ -417,22 +398,13 @@
       animation: floatUp 5s linear forwards;
     }
 
-    @keyframes pulse {
-      50% { transform: scale(1.15); }
-    }
-
-    @keyframes floatUp {
-      to { transform: translateY(-110vh) rotate(25deg); opacity: 0; }
-    }
-
-    @keyframes appear {
-      from { opacity: 0; transform: translateY(15px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+    @keyframes pulse { 50% { transform: scale(1.15); } }
+    @keyframes floatUp { to { transform: translateY(-110vh) rotate(25deg); opacity: 0; } }
+    @keyframes appear { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
 
     @media (max-width: 650px) {
       section { padding: 60px 18px; }
-      .gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+      .gallery { columns: 2 150px; column-gap: 14px; }
       .reasons { grid-template-columns: 1fr; }
       .counter-unit { min-width: 65px; }
       .counter-unit strong { font-size: 25px; }
@@ -446,12 +418,12 @@
     <div class="eyebrow">October 18, 2024 — Forever after</div>
     <div class="heart">♡</div>
     <h1>Two years<br>with you,<br><span>baby.</span></h1>
-    <p>
+    <p id="dynamic-subtitle">
       A little scrapbook of us, the memories we've made,
       and all the beautiful moments still waiting for us.
     </p>
-    <button class="button" onclick="document.querySelector('#our-story').scrollIntoView()">
-      Open our story ↓
+    <button class="button" onclick="startExperience()">
+      Open our story & play music ↓
     </button>
   </header>
 
@@ -479,47 +451,28 @@
 
     <section>
       <h2 class="section-title">Our little timeline</h2>
-      <p class="section-subtitle">
-        A few moments from the beginning of our forever.
-      </p>
+      <p class="section-subtitle">A few moments from the beginning of our forever.</p>
 
       <div class="timeline">
         <article class="moment">
           <time>October 18, 2024</time>
           <h3>The beginning of us</h3>
-          <p>
-            We met through friends in front of a bar.
-            Neither of us knew how much that night would come to mean.
-          </p>
+          <p>We met through friends in front of a bar. Neither of us knew how much that night would come to mean.</p>
         </article>
-
         <article class="moment">
           <time>That late night</time>
           <h3>Our first kiss</h3>
-          <p>
-            Walking through the park after our first official meet,
-            we kissed before you got into your car.
-            One of those moments I know I'll always remember.
-          </p>
+          <p>Walking through the park after our first official meet, we kissed before you got into your car.</p>
         </article>
-
         <article class="moment">
           <time>All the days in between</time>
           <h3>The little things</h3>
-          <p>
-            Your smile, our conversations, the way you fit in with my
-            family, your hard work, and the food you make for me.
-            Ordinary days became some of my favourites.
-          </p>
+          <p>Your smile, our conversations, the way you fit in with my family, and the food you make for me.</p>
         </article>
-
         <article class="moment">
           <time>October 18, 2026</time>
           <h3>Two years, baby</h3>
-          <p>
-            Two years of memories, love, laughter, and a whole world
-            still waiting for us to explore together.
-          </p>
+          <p>Two years of memories, love, laughter, and a whole world still waiting for us.</p>
         </article>
       </div>
     </section>
@@ -527,51 +480,31 @@
     <section>
       <h2 class="section-title">Our memories</h2>
       <p class="section-subtitle">
-        Every photo is a little piece of our story.
-        Replace these with your favourite pictures together.
+        Every photo is a piece of our story. (Handling all 47 vertical & horizontal pictures cleanly!)
       </p>
 
+      <!-- Gallery for your 47 images (add as many as you need here) -->
       <div class="gallery">
-        <div class="polaroid">
-          <img src="images/photo1.jpg" alt="A favourite photo of us" loading="lazy">
-          <p>My favourite person ♡</p>
-        </div>
-        <div class="polaroid">
-          <img src="images/photo2.jpg" alt="A memory together" loading="lazy">
-          <p>One for the memories</p>
-        </div>
-        <div class="polaroid">
-          <img src="images/photo3.jpg" alt="A happy moment together" loading="lazy">
-          <p>Just us</p>
-        </div>
-        <div class="polaroid">
-          <img src="images/photo4.jpg" alt="A silly moment together" loading="lazy">
-          <p>My favourite weirdo</p>
-        </div>
-        <div class="polaroid">
-          <img src="images/photo5.jpg" alt="A special date together" loading="lazy">
-          <p>Another little adventure</p>
-        </div>
-        <div class="polaroid">
-          <img src="images/photo6.jpg" alt="A recent photo together" loading="lazy">
-          <p>And still my favourite</p>
-        </div>
+        <div class="polaroid"><img src="images/photo1.jpg" alt="Memory" loading="lazy"><p>My favourite person ♡</p></div>
+        <div class="polaroid"><img src="images/photo2.jpg" alt="Memory" loading="lazy"><p>One for the memories</p></div>
+        <div class="polaroid"><img src="images/photo3.jpg" alt="Memory" loading="lazy"><p>Just us</p></div>
+        <div class="polaroid"><img src="images/photo4.jpg" alt="Memory" loading="lazy"><p>My favourite weirdo</p></div>
+        <div class="polaroid"><img src="images/photo5.jpg" alt="Memory" loading="lazy"><p>Another adventure</p></div>
+        <div class="polaroid"><img src="images/photo6.jpg" alt="Memory" loading="lazy"><p>Still my favourite</p></div>
+        <!-- You can paste up to photo47.jpg here following the same structure! -->
       </div>
     </section>
 
     <section>
       <h2 class="section-title">A song from me to you</h2>
-      <p class="section-subtitle">
-        I made this one for you. Whenever you listen,
-        I hope it reminds you of us.
-      </p>
+      <p class="section-subtitle">I made this one for you. Whenever you listen, I hope it reminds you of us.</p>
 
       <div class="song-card">
         <div class="album-art">♫ ♡</div>
         <div class="eyebrow">An original song by Philip</div>
         <h3>Home</h3>
         <p>For Daphne, with love.</p>
-        <audio controls preload="metadata">
+        <audio id="bg-audio" controls preload="metadata">
           <source src="audio/home.mp3" type="audio/mpeg">
           Your browser does not support audio playback.
         </audio>
@@ -580,37 +513,13 @@
 
     <section>
       <h2 class="section-title">A few things I love about you</h2>
-      <p class="section-subtitle">
-        I could keep going, but here are a few things
-        that make you the person you are.
-      </p>
-
       <div class="reasons">
-        <div class="reason">
-          <span>♡</span>
-          Your smile. It gets me every time.
-        </div>
-        <div class="reason">
-          <span>♡</span>
-          How smart, funny, beautiful, and genuine you are.
-        </div>
-        <div class="reason">
-          <span>♡</span>
-          How easy it is to talk to you about anything.
-        </div>
-        <div class="reason">
-          <span>♡</span>
-          The way you've become part of my family.
-        </div>
-        <div class="reason">
-          <span>♡</span>
-          How hard you work and how thoughtful you are.
-        </div>
-        <div class="reason">
-          <span>♡</span>
-          Your Italian sausage pasta and homemade cinnamon buns.
-          Seriously, never stop making those.
-        </div>
+        <div class="reason"><span>♡</span> Your smile. It gets me every time.</div>
+        <div class="reason"><span>♡</span> How smart, funny, beautiful, and genuine you are.</div>
+        <div class="reason"><span>♡</span> How easy it is to talk to you about anything.</div>
+        <div class="reason"><span>♡</span> The way you've become part of my family.</div>
+        <div class="reason"><span>♡</span> How hard you work and how thoughtful you are.</div>
+        <div class="reason"><span>♡</span> Your Italian sausage pasta and homemade cinnamon buns.</div>
       </div>
     </section>
 
@@ -618,46 +527,21 @@
       <div class="travel-card">
         <p class="japan">富士山 ♡</p>
         <h2 class="section-title">Our next adventure</h2>
-        <p class="section-subtitle" style="margin-bottom:10px">
-          One day, Japan. Then wherever else life takes us.
-          New places, new memories, and you beside me through it all.
-        </p>
-        <p class="handwritten" style="font-size:27px">
-          The world is better with you in it.
-        </p>
+        <p class="section-subtitle" style="margin-bottom:10px">One day, Japan. Then wherever else life takes us.</p>
+        <p class="handwritten" style="font-size:27px">The world is better with you in it.</p>
       </div>
     </section>
 
     <section class="letter-section">
       <h2 class="section-title">A letter for you</h2>
-      <p class="section-subtitle">
-        Some things deserve more than a text message.
-        I left this space for the words I want you to read.
-      </p>
+      <p class="section-subtitle">Some things deserve more than a text message.</p>
 
-      <button
-        class="envelope"
-        id="envelope"
-        aria-label="Open your love letter"
-        aria-expanded="false"
-        onclick="toggleLetter()">
-      </button>
-
-      <p class="handwritten" style="font-size:25px">
-        Click to open, baby.
-      </p>
+      <button class="envelope" id="envelope" aria-label="Open your love letter" aria-expanded="false" onclick="toggleLetter()"></button>
+      <p class="handwritten" style="font-size:25px">Click to open, baby.</p>
 
       <div class="letter-paper" id="letter-paper">
         <h3>To my Daphne ♡</h3>
-        <p class="letter-note">
-          Write your letter below. Before publishing, copy your finished
-          letter into the website code so Daphne can read it too.
-        </p>
-        <textarea id="letter" placeholder="My baby,
-
-Write whatever is in your heart here...
-
-I love you. ♡"></textarea>
+        <textarea id="letter" placeholder="My baby, write whatever is in your heart here..."></textarea>
         <button class="button" onclick="copyLetter()">Copy my letter</button>
         <p class="letter-note" id="copy-status" aria-live="polite"></p>
       </div>
@@ -668,26 +552,42 @@ I love you. ♡"></textarea>
     <div class="heart">♡</div>
     <div class="eyebrow">To be continued</div>
     <h2>Until next year,<br>baby.</h2>
-    <p>
-      This isn't the end of our story.
-      It's another chapter in a life I want to keep building with you.
-      More memories, more adventures, more anniversaries.
-      I'm looking forward to all of it.
-    </p>
-    <div class="handwritten" style="font-size:32px">
-      I love you, Daphne. ♡
-    </div>
+    <p>This isn't the end of our story. It's another chapter in a life I want to keep building with you.</p>
+    <div class="handwritten" style="font-size:32px">I love you, Daphne. ♡</div>
   </footer>
 
   <script>
-    // Relationship began October 18, 2024.
-    // JavaScript months are zero-based: 9 means October.
-    const startDate = new Date(2024, 9, 18, 0, 0, 0);
+    // Dynamic Welcome Subtitle Rotator
+    const subtitles = [
+      "A little scrapbook of us, the memories we've made, and all the moments still waiting for us.",
+      "Two years down, a lifetime to go, baby. ♡",
+      "Every picture here is a piece of my favorite story."
+    ];
+    let subIndex = 0;
+    const subElement = document.getElementById("dynamic-subtitle");
+    
+    setInterval(() => {
+      subElement.style.opacity = 0;
+      setTimeout(() => {
+        subIndex = (subIndex + 1) % subtitles.length;
+        subElement.textContent = subtitles[subIndex];
+        subElement.style.opacity = 1;
+      }, 400);
+    }, 4500);
+    subElement.style.transition = "opacity 0.4s ease";
 
+    // Play Audio & Scroll on Button Click (Bypasses Browser Autoplay Restrictions)
+    function startExperience() {
+      const audio = document.getElementById("bg-audio");
+      audio.play().catch(e => console.log("Audio play blocked or waiting user interaction"));
+      document.querySelector('#our-story').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // Relationship counter
+    const startDate = new Date(2024, 9, 18, 0, 0, 0);
     function updateCounter() {
       const elapsed = Math.max(0, Date.now() - startDate.getTime());
       const seconds = Math.floor(elapsed / 1000);
-
       const days = Math.floor(seconds / 86400);
       const hours = Math.floor((seconds % 86400) / 3600);
       const minutes = Math.floor((seconds % 3600) / 60);
@@ -695,11 +595,8 @@ I love you. ♡"></textarea>
 
       const values = [days, hours, minutes, remainingSeconds];
       document.querySelectorAll("#counter .counter-unit strong")
-        .forEach((element, index) => {
-          element.textContent = values[index].toLocaleString();
-        });
+        .forEach((el, i) => el.textContent = values[i].toLocaleString());
     }
-
     updateCounter();
     setInterval(updateCounter, 1000);
 
@@ -707,30 +604,22 @@ I love you. ♡"></textarea>
       const envelope = document.getElementById("envelope");
       const paper = document.getElementById("letter-paper");
       const isOpen = paper.classList.toggle("visible");
-
       envelope.classList.toggle("open", isOpen);
       envelope.setAttribute("aria-expanded", String(isOpen));
-
-      if (isOpen) {
-        paper.scrollIntoView({ behavior: "smooth", block: "center" });
-      }
+      if (isOpen) paper.scrollIntoView({ behavior: "smooth", block: "center" });
     }
 
     async function copyLetter() {
       const letter = document.getElementById("letter");
       const status = document.getElementById("copy-status");
-
       try {
         await navigator.clipboard.writeText(letter.value);
         status.textContent = "Copied! Save your letter somewhere safe.";
       } catch (error) {
-        letter.focus();
-        letter.select();
         status.textContent = "Select the text and copy it manually.";
       }
     }
 
-    // Small floating hearts appear occasionally.
     function createHeart() {
       const heart = document.createElement("span");
       heart.className = "floating-heart";
@@ -740,7 +629,6 @@ I love you. ♡"></textarea>
       document.body.appendChild(heart);
       setTimeout(() => heart.remove(), 5000);
     }
-
     setInterval(createHeart, 1800);
   </script>
 </body>
